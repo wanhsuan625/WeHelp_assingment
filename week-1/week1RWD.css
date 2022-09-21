@@ -1,0 +1,133 @@
+*{  
+    position: relative;
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+}
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+a{height: 0;}
+/* NAVBAR 設定 */
+.navbar{
+    display: flex;
+    align-content: center;
+    font-size: 20px;
+    font-family: Times;
+    margin: 8px 16px;
+}
+.menu{  
+    display: flex;
+    position: absolute;     /* 將item移至最右側 */
+    right: 0;
+}
+.menu>li{
+    padding: 0 10px;
+}
+.hamburgIcon{
+    display: none;
+    width: 40px;
+    height: 23px;
+    position: fixed;
+    right: 16px;
+}
+
+/* HEADER 設定 */
+.outer{
+    height: 300px;          /* 需設於outer才能完成垂直置中 */
+    background-color: #def7ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header{
+    font-size: 40px;
+    font-family: Times;
+    font-weight: bold;
+}
+
+/* CONTENT 設定 */
+.content{
+    display: flex;
+    justify-content: center;
+}
+.container{
+    margin: 40px 0;
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* 上層方框 */
+.title{
+    width: calc(50% - 10px);    /* 間距：20px */
+    background-color: #b2d3eb;
+    display: flex;
+}
+.title .imgBox{
+    width: 80px;
+    height: 50px;
+}
+.title img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+.prom{
+    font-size: 20px;
+    font-family: Times;
+    line-height: 50px;
+    padding-left: 12px;
+}
+/* 圖片排版 */
+.card{
+    width: calc(25% - 15px);
+    background-color: #b2d3eb;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+.card .imgBox{
+    width: 100%;
+    padding-top: 75%;
+    position: relative;
+}
+.card img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+
+    object-fit: cover;
+    object-position: center center;
+}
+.label{
+    font-size: 20px;
+    font-family: Times;
+    line-height: 50px;
+}
+
+/* 1200px 以下之排版 */
+@media (max-width: 1200px){
+    .container{width: 90%;}
+    .card{width: calc(50% - 10px);}
+}
+/* 600px 以下之排版 */
+@media (max-width: 600px){
+    .container{margin-top: 20px;}
+    .title{
+        width: 100%;
+        margin-top: 20px;
+    }
+    .container .card{width: 100%;}
+
+    /* navbar 漢堡選單設定 */
+    .hamburgIcon{display: block;}
+    .menu{display: none;}
+}
