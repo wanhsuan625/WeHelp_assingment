@@ -79,9 +79,8 @@
             let multiply = function(b,c){
                 console.log( a + (b*c) );
             }
-            return multiply;      // ** 比較 multiply() 跟 multiply 的差異
+            return multiply;
         }
-        // ** func 跟 func(2) 的差異
         
         func(2)(3, 4); // 你補完的函式能印出 2+(3*4) 的結果 14
         func(5)(1, -5); // 你補完的函式能印出 5+(1*-5) 的結果 0
@@ -153,7 +152,7 @@
     // Question 6.
         function maxZeros(nums){
             let cnt = 0;
-            let max_cnt = 0;       // 和cnt 比較大小
+            let max_cnt = 0;       // 儲存cnt最大的數值
 
             for(let i = 0; i < nums.length; i++){
                 if(nums[i] === 0){
