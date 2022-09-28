@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week2_Assignment</title>
+</head>
+<body>
+    <script>
+    // Question 1.
+        function calculate(min, max, step){
+            /* While 寫法
+            let sum = min;
+            let a = min + step;
+            while(a <= max){
+                sum += a;
+                a += step;
+            }*/
+
+            let sum = min;
+            for(let a = min + step ; a <= max; a += step){
+                sum += a;
+            }
+            console.log(sum);
+        }
+    
+        calculate(1, 3, 1); // 你的程式要能夠計算 1+2+3，最後印出 6
+        calculate(4, 8, 2); // 你的程式要能夠計算 4+6+8，最後印出 18
+        calculate(-1, 2, 2); // 你的程式要能夠計算 -1+1，最後印出 0
+    
+    //=============================================================
+    // Question 2.
+        function avg(data){
+            let len = data["employees"].length;       // value為 array
+            let sum = 0;
+            let num = 0;    // 非manager人數計算
+
+            for (let i = 0; i < len; i++){
+                if(data["employees"][i].manager === false){
+                    sum += data["employees"][i].salary;
+                    num++;
+                }
+            }
+
+            let averge = sum/num;
+            console.log(averge);
+        }
+
+        avg({
+            "employees":[
+                {
+                    "name":"John",
+                    "salary":30000,
+                    "manager":false
+                },
+                {
+                    "name":"Bob",
+                    "salary":60000,
+                    "manager":true
+                },
+                {
+                    "name":"Jenny",
+                    "salary":50000,
+                    "manager":false
+                },
+                {
+                    "name":"Tony",
+                    "salary":40000,
+                    "manager":false
+                }
+            ]
+        }); // 呼叫 avg 函式
+
+    //=============================================================
+    // Question 3.
+        // Nested Function
+        function func(a){
+            let multiply = function(b,c){
+                console.log( a + (b*c) );
+            }
+            return multiply;      // ** 比較 multiply() 跟 multiply 的差異
+        }
+        // ** func 跟 func(2) 的差異
+        
+        func(2)(3, 4); // 你補完的函式能印出 2+(3*4) 的結果 14
+        func(5)(1, -5); // 你補完的函式能印出 5+(1*-5) 的結果 0
+        func(-3)(2, 9); // 你補完的函式能印出 -3+(2*9) 的結果 15
+        // 一般形式為 func(a)(b, c) 要印出 a+(b*c) 的結果
+
+    //=============================================================
+    // Question 4.
+        function maxProduct(nums){
+            let maxArray = [];
+            let minArray = [];
+            maxArray.push(-Infinity, -Infinity);         
+            minArray.push(Infinity, Infinity);
+
+            for (let i = 0; i<nums.length; i++){
+                // 找最大的兩個值
+                if(maxArray[1] <= nums[i]){     // 比最大的大 → 刪第二大的 & 插到後面
+                    maxArray.shift();
+                    maxArray.push(nums[i]);
+                }else if(maxArray[0] < nums[i]){   // 比最大的小(if已過濾)，但比第二大的大 → 刪第二大的 & 插到前面
+                    maxArray.shift();
+                    maxArray.unshift(nums[i]);
+                }
+                
+                // 找最小的兩個值
+                if(nums[i] <= minArray[0]){     // 比最小的小 → 刪第二小的 & 插到前面
+                    minArray.pop();
+                    minArray.unshift(nums[i]);
+                }else if(nums[i] < minArray[1]){   // 比最小的大(if已過濾)，但比第二小的小 → 刪第二小的 & 插到後面
+                    minArray.pop();
+                    minArray.push(nums[i]);
+                }
+            }
+            // console.log(maxArray);
+            // console.log(minArray);
+            let productMax = maxArray[0] * maxArray[1];
+            let productMin = minArray[0] * minArray[1];
+            let result = (productMax > productMin)? productMax : productMin;
+            console.log(result);
+        }
+
+        maxProduct([5, 20, 2, 6]); // 得到 120
+        maxProduct([10, -20, 0, 3]); // 得到 30
+        maxProduct([10, -20, 0, -3]); // 得到 60
+        maxProduct([-1, 2]); // 得到 -2
+        maxProduct([-1, 0, 2]); // 得到 0 或 -0
+        maxProduct([5, -1, -2, 0]); // 得到 2
+        maxProduct([-5, -2]); // 得到 10
+
+    //=============================================================
+    // Question 5.   
+        function twoSum(nums, target){
+            let solve = [];
+
+            for(let i = 0; i < nums.length; i++){
+                for(let j = (i+1); j < nums.length; j++){
+                    if(nums[i] + nums[j] === target){
+                        solve.push(i,j);
+                        return solve;
+                    }
+                }
+            }
+        }
+
+        let result=twoSum([2, 11, 7, 15], 9);
+        console.log(result); // show [0, 2] because nums[0]+nums[2] is 9
+
+    //=============================================================
+    // Question 6.
+        function maxZeros(nums){
+            let cnt = 0;
+            let max_cnt = 0;       // 和cnt 比較大小
+
+            for(let i = 0; i < nums.length; i++){
+                if(nums[i] === 0){
+                    cnt++;
+                    if(cnt > max_cnt){ max_cnt = cnt;}
+                }
+                else{
+                    cnt = 0;
+                }
+            }
+            console.log(max_cnt)
+        }
+        maxZeros([0, 1, 0, 0]); // 得到 2
+        maxZeros([1, 0, 0, 0, 0, 1, 0, 1, 0, 0]); // 得到 4
+        maxZeros([1, 1, 1, 1, 1]); // 得到 0
+        maxZeros([0, 0, 0, 1, 1]) // 得到 3
+
+    </script>
+</body>
+</html>
