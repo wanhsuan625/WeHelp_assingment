@@ -110,11 +110,28 @@ def twoSum(nums, target):
 
     for i in range(0,length):
         diff = target - nums[i]
-        if(diff in nums):
+        if(diff in nums):                       # 搜尋 list會增加時間複雜度 → list 一個坑一個蘿蔔
             solve.extend([i,nums.index(diff)])
             return solve
 
     
+result=twoSum([2, 11, 7, 15], 9)
+print(result) # show [0, 2] because nums[0]+nums[2] is 9
+
+#--------------------------------------------------------------
+# Questuin 5.改
+def twoSum(nums,target):
+    solve = {nums[0]:0}
+    length = len(nums)
+    
+    for i in range(1,length):
+        diff = target - nums[i]
+        if(diff in solve):              # 用dict搜尋可降低時間複雜度
+            return [solve[diff],i]
+        else:
+            solve[nums[i]] = i
+
+            
 result=twoSum([2, 11, 7, 15], 9)
 print(result) # show [0, 2] because nums[0]+nums[2] is 9
 
@@ -133,9 +150,32 @@ def maxZeros(nums):
             cnt = 0
             cntList.append(cnt)
 
-    print(max(cntList))
+    print(max(cntList))         # 用 max會在搜尋一次 cntList此列表中的元素，增加時間複雜度
 #     print(cntList)
     
+maxZeros([0, 1, 0, 0]) # 得到 2
+maxZeros([1, 0, 0, 0, 0, 1, 0, 1, 0, 0]) # 得到 4
+maxZeros([1, 1, 1, 1, 1]) # 得到 0
+maxZeros([0, 0, 0, 1, 1]) # 得到 3
+
+#--------------------------------------------------------------
+# Question 6. 改
+def maxZeros(nums):
+    cnt = 0
+    cntMax = 0                #設一個跟cnt比大小的值，來儲存cnt最大值的時候
+    length = len(nums)
+    
+    for i in range(0,length):
+        if(nums[i] == 0):
+            cnt += 1
+            if(cnt > cntMax):
+                cntMax = cnt
+        else:
+            cnt = 0
+
+    print(cntMax)
+
+
 maxZeros([0, 1, 0, 0]) # 得到 2
 maxZeros([1, 0, 0, 0, 0, 1, 0, 1, 0, 0]) # 得到 4
 maxZeros([1, 1, 1, 1, 1]) # 得到 0

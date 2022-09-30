@@ -43,8 +43,7 @@
                 }
             }
 
-            let averge = sum/num;
-            console.log(averge);
+            console.log(sum/num);
         }
 
         avg({
@@ -132,6 +131,7 @@
 
     //=============================================================
     // Question 5.   
+    /*
         function twoSum(nums, target){
             let solve = [];
 
@@ -147,13 +147,33 @@
 
         let result=twoSum([2, 11, 7, 15], 9);
         console.log(result); // show [0, 2] because nums[0]+nums[2] is 9
+        */
+    //-------------------------------------------------------------
+    // Question 5. 改
+        function twoSum(nums, target){
+            let solve = {};
+            solve[nums[0]] = 0;
+            
+            for(let i = 1; i < nums.length; i++){
+                let diff = target - nums[i];
+                if(solve.hasOwnProperty(diff)){
+                    return [solve[diff] ,i]
+                }
+                else{
+                    solve[nums[i]] = i;
+                }
+            }
+        }
+
+        let result=twoSum([2, 11, 7, 15], 9);
+        console.log(result); // show [0, 2] because nums[0]+nums[2] is 9
 
     //=============================================================
     // Question 6.
         function maxZeros(nums){
             let cnt = 0;
             let max_cnt = 0;       // 儲存cnt最大的數值
-
+            
             for(let i = 0; i < nums.length; i++){
                 if(nums[i] === 0){
                     cnt++;
@@ -163,7 +183,21 @@
                     cnt = 0;
                 }
             }
+            
+            /*
+            // forEach
+            nums.forEach(function(val,ind,arr){
+                if(val === 0){
+                    cnt++;
+                    if(cnt > max_cnt){ max_cnt = cnt}
+                }
+                else{
+                    cnt = 0;
+                }
+            })
+            */
             console.log(max_cnt)
+
         }
         maxZeros([0, 1, 0, 0]); // 得到 2
         maxZeros([1, 0, 0, 0, 0, 1, 0, 1, 0, 0]); // 得到 4
