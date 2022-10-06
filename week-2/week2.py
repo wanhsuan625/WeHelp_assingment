@@ -55,7 +55,7 @@ def func(a):
     def mult(b,c):
         print(a + (b*c))
     return mult
-
+    
 
 func(2)(3, 4) # 你補完的函式能印出 2+(3*4) 的結果 14
 func(5)(1, -5) # 你補完的函式能印出 5+(1*-5) 的結果 0
