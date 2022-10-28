@@ -79,7 +79,7 @@ def error():
 # 登出設置
 @app.route('/signout', methods=["GET"])
 def signout():
-    session['state'] = 'logout'
+    session.clear()
     return redirect('/')
 
 if __name__ == '__main__':
