@@ -15,6 +15,18 @@
                 <a href="http://127.0.0.1:3000/signout">登出系統</a>
             </form>
         </div>
+        <hr>
+        <div class="content_mb"><b>快來留言吧</b>
+            <form action="/message" method="POST">
+                內容 <input type="text" name="message">
+                <input type="submit" value="送出">
+            </form>
+        </div>
+        <hr>
+        {% for cont in content%}
+                <div style="text-align:center"><b>{{cont[0]}}：</b>{{cont[1]}}</div>
+        {% endfor %}
+        <br>
     </div>
 </body>
 </html>

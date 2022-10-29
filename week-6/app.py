@@ -68,7 +68,22 @@ def member():
     if userState != 'login':
         return redirect('/')
     else:
-        return render_template('member.html', name = userName[1])
+        sql_content = "select member.name, message.content from member inner join message on member.id = message.member_id order by message.time"
+        cursor.execute(sql_content)
+        result_content = cursor.fetchall()
+        return render_template('member.html', name = userName[1], content = result_content)
+
+# 留言頁面
+@app.route('/message', methods=["POST"])
+def message():
+    userName = session.get('user')
+    content = request.form["message"]
+ 
+    sql_msg = "insert into message(member_id,content) values(%s,%s)"
+    val_msg = (userName[0], content)
+    cursor.execute(sql_msg,val_msg)
+    mydb.commit()
+    return redirect('/member')
 
 # 失敗頁面
 @app.route('/error')
@@ -81,6 +96,7 @@ def error():
 def signout():
     session.clear()
     return redirect('/')
+
 
 if __name__ == '__main__':
     app.run(port=3000)
