@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEEEK6_ASSIGNMENT</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">歡迎光臨，這是會員頁</div>
+        <div class="content_mb" id="updatename" style="margin-bottom:10px">{{name}}，歡迎登入系統</div>
+        <div class="content_mb" style="margin-top:10px">
+            <form action="/signout" method="GET">
+                <a href="http://127.0.0.1:3000/signout">登出系統</a>
+            </form>
+        </div>
+        <hr>
+        <div class="content_mb"><b>查詢會員姓名</b><br>
+            <input type="text" id="username" name="username">
+            <button onclick = "searchName();">查詢</button>
+            <div class="search"></div>
+        </div> 
+        <hr>
+        <div class="content_mb"><b>更新我的姓名</b><br>
+            <input type="text" id="newname" name = "newname" placeholder="輸入新的姓名">
+            <button onclick = "updateName();">更新</button>
+            <div class="update"></div>
+        </div>
+        <hr>
+        <div class="content_mb"><b>快來留言吧</b>
+            <form action="/message" method="POST">
+                內容 <input type="text" name="message">
+                <input type="submit" value="送出">
+            </form>
+        </div>
+        <hr>
+        {% for cont in content%}
+                <div style="text-align:center"><b>{{cont[0]}}:</b>{{cont[1]}}</div>
+        {% endfor %}
+        <br>
+    </div>
+
+    <!-- JS -->
+    <script>
+        function searchName(){
+            let userName = document.getElementById("username").value;
+            fetch(`http://127.0.0.1:3000/api/member?username=${userName}`).then(function(response){
+                    return response.json();
+                }).then(function(search){
+                    if (search["data"] === null){
+                        return null;
+                    }
+                    else{
+                        let name = search["data"]["name"];
+                        return name;
+                    }
+                }).then(function(name){     // 使結果顯示在網頁中
+                    if (name != null){
+                        result = name + " (" + userName + ")";
+                        let searchResult = document.querySelector(".search");
+                        searchResult.innerHTML = result;
+                    }
+                    else{
+                        let searchResult = document.querySelector(".search");
+                        searchResult.innerHTML = "查無此會員";
+                    }
+                });
+            }
+
+        function updateName(){
+            let newname = document.getElementById("newname").value;
+            fetch("http://127.0.0.1:3000/api/member",{
+                method: "PATCH",
+                body: JSON.stringify({
+                    name: newname,
+                }),
+                headers:{
+                    'Content-type':'application/json; charset = UTF-8',
+                },
+            }).then(function(response){
+                return response.json();
+            }).then(function(update){
+                if(update["ok"] === "true"){
+                    let name = document.querySelector("#updatename");
+                    name.innerText = `${newname}，歡迎登入系統`
+
+                    let updateResult = document.querySelector(".update");
+                    updateResult.innerHTML = "更新成功"
+                }
+            })
+        }
+
+        // }
+    </script>
+</body>
+</html>
