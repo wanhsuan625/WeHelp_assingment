@@ -11,7 +11,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 dbconfig = {
     "host":"localhost",
     "user":"root",
-    "password":"aa22bb33",
+    "password":"",
     "database":"website"
 }
 connection_pool = mysql.connector.pooling.MySQLConnectionPool(
